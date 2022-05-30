@@ -26,7 +26,7 @@ namespace crozone.Logging.AdbLogger
         }
 
         /// <summary>
-        /// Adds an Adb logger that is enabled for <see cref="LogLevel"/>.Information or higher.
+        /// Adds an Adb logger that is enabled for <see cref="Microsoft.Extensions.Logging.LogLevel"/>.Information or higher.
         /// </summary>
         /// <param name="factory">The extension method argument.</param>
         /// <param name="tag">The tag to be used in the Android logging utility.</param>
@@ -48,11 +48,11 @@ namespace crozone.Logging.AdbLogger
         }
 
         /// <summary>
-        /// Adds an Adb logger that is enabled for <see cref="LogLevel"/>s of minLevel or higher.
+        /// Adds an Adb logger that is enabled for <see cref="Microsoft.Extensions.Logging.LogLevel"/>s of minLevel or higher.
         /// </summary>
         /// <param name="factory">The extension method argument.</param>
         /// <param name="tag">The tag to be used in the Android logging utility.</param>
-        /// <param name="minLevel">The minimum <see cref="LogLevel"/> to be logged.</param>
+        /// <param name="minLevel">The minimum <see cref="Microsoft.Extensions.Logging.LogLevel"/> to be logged.</param>
         public static ILoggerFactory AddAdb(this ILoggerFactory factory, string tag, LogLevel minLevel)
         {
             return AddAdb(

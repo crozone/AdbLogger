@@ -9,7 +9,7 @@ namespace crozone.Logging.AdbLogger
     [ProviderAlias("Adb")]
     public class AdbLoggerProvider : ILoggerProvider
     {
-        private readonly Func<string, LogLevel, bool> filter;
+        private readonly Func<string, LogLevel, bool>? filter;
         private readonly string tag;
 
         public AdbLoggerProvider(string tag)
@@ -19,10 +19,10 @@ namespace crozone.Logging.AdbLogger
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DebugLoggerProvider"/> class.
+        /// Initializes a new instance of the <see cref="AdbLoggerProvider"/> class.
         /// </summary>
         /// <param name="filter">The function used to filter events based on the log level.</param>
-        public AdbLoggerProvider(string tag, Func<string, LogLevel, bool> filter)
+        public AdbLoggerProvider(string tag, Func<string, LogLevel, bool>? filter)
         {
             this.tag = tag;
             this.filter = filter;
