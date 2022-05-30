@@ -2,6 +2,8 @@
 
 A Xamarin Android Adb logger for the Microsoft.Extensions.Logging framework.
 
+Built for `net6.0-android` runtime.
+
 ### Non-DI example:
 
 ```

@@ -8,7 +8,7 @@ namespace crozone.Logging.AdbLogger
     /// </summary>
     public partial class AdbLogger : ILogger
     {
-        private readonly Func<string, LogLevel, bool> filter;
+        private readonly Func<string, LogLevel, bool>? filter;
         private readonly string name;
         private readonly string tag;
 
@@ -17,7 +17,7 @@ namespace crozone.Logging.AdbLogger
         /// </summary>
         /// <param name="tag">The tag to be used in the Android logging utility.</param>
         /// <param name="name">The name of the logger.</param>
-        public AdbLogger(string tag, string name) : this(tag, name, filter: null)
+        public AdbLogger(string tag, string name) : this(tag, name, null)
         {
         }
 
@@ -27,7 +27,7 @@ namespace crozone.Logging.AdbLogger
         /// <param name="tag">The tag to be used in the Android logging utility.</param>
         /// <param name="name">The name of the logger.</param>
         /// <param name="filter">The function used to filter events based on the log level.</param>
-        public AdbLogger(string tag, string name, Func<string, LogLevel, bool> filter)
+        public AdbLogger(string tag, string name, Func<string, LogLevel, bool>? filter)
         {
             this.tag = tag ?? throw new ArgumentNullException(nameof(tag));
             this.name = string.IsNullOrEmpty(name) ? nameof(AdbLogger) : name;
@@ -49,7 +49,7 @@ namespace crozone.Logging.AdbLogger
         }
 
         /// <inheritdoc />
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
             if (!IsEnabled(logLevel))
             {
