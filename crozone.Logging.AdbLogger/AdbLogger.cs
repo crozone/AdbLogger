@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+
 using System;
 
 namespace crozone.Logging.AdbLogger
@@ -12,14 +13,7 @@ namespace crozone.Logging.AdbLogger
         private readonly string name;
         private readonly string tag;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AdbLogger"/> class.
-        /// </summary>
-        /// <param name="tag">The tag to be used in the Android logging utility.</param>
-        /// <param name="name">The name of the logger.</param>
-        public AdbLogger(string tag, string name) : this(tag, name, null)
-        {
-        }
+        internal IExternalScopeProvider? ScopeProvider { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AdbLogger"/> class.
@@ -27,17 +21,12 @@ namespace crozone.Logging.AdbLogger
         /// <param name="tag">The tag to be used in the Android logging utility.</param>
         /// <param name="name">The name of the logger.</param>
         /// <param name="filter">The function used to filter events based on the log level.</param>
-        public AdbLogger(string tag, string name, Func<string, LogLevel, bool>? filter)
+        public AdbLogger(string tag, string name, IExternalScopeProvider? scopeProvider, Func<string, LogLevel, bool>? filter)
         {
             this.tag = tag ?? throw new ArgumentNullException(nameof(tag));
             this.name = string.IsNullOrEmpty(name) ? nameof(AdbLogger) : name;
+            this.ScopeProvider = scopeProvider;
             this.filter = filter;
-        }
-
-        /// <inheritdoc />
-        public IDisposable BeginScope<TState>(TState state)
-        {
-            return NoopDisposable.Instance;
         }
 
         /// <inheritdoc />
@@ -103,14 +92,6 @@ namespace crozone.Logging.AdbLogger
             }
         }
 
-        private class NoopDisposable : IDisposable
-        {
-            public static NoopDisposable Instance = new NoopDisposable();
-
-            public void Dispose()
-            {
-            }
-        }
+        public IDisposable BeginScope<TState>(TState state) where TState : notnull => ScopeProvider?.Push(state) ?? NullScope.Instance;
     }
-
 }
