@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0-android</TargetFramework>
     <Nullable>enable</Nullable>
-    <SupportedOSPlatformVersion>9</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <ItemGroup>
