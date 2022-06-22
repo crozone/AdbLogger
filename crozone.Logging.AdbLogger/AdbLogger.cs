@@ -50,42 +50,34 @@ namespace crozone.Logging.AdbLogger
                 throw new ArgumentNullException(nameof(formatter));
             }
 
-            var message = formatter(state, exception);
+            string message = formatter(state, exception) ?? "";
 
-            if (exception != null)
-            {
-                message += Environment.NewLine + Environment.NewLine + exception.ToString();
-            }
+            Java.Lang.Throwable? throwable = exception != null ? Java.Lang.Throwable.FromException(exception) : null;
 
-            if (string.IsNullOrEmpty(message))
-            {
-                return;
-            }
-
+            // The throwable parameter can be null, but the log methods aren't annotated for nullability.
             switch (logLevel)
             {
                 case LogLevel.Trace:
-                    Android.Util.Log.Verbose(tag, message);
+                    Android.Util.Log.Verbose(tag, throwable!, message);
                     break;
                 case LogLevel.Debug:
-                    Android.Util.Log.Debug(tag, message);
+                    Android.Util.Log.Debug(tag, throwable!, message);
                     break;
                 case LogLevel.Information:
-                    Android.Util.Log.Info(tag, message);
+                    Android.Util.Log.Info(tag, throwable!, message);
                     break;
                 case LogLevel.Warning:
-                    Android.Util.Log.Warn(tag, message);
+                    Android.Util.Log.Warn(tag, throwable!, message);
                     break;
                 case LogLevel.Error:
-                    Android.Util.Log.Error(tag, message);
+                    Android.Util.Log.Error(tag, throwable!, message);
                     break;
                 case LogLevel.Critical:
-                    Android.Util.Log.Wtf(tag, message);
+                    Android.Util.Log.Wtf(tag, throwable!, message);
                     break;
                 case LogLevel.None:
                     break;
                 default:
-                    Android.Util.Log.Info(tag, message);
                     break;
             }
         }
