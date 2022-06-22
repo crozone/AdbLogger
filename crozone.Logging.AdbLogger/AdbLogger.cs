@@ -52,16 +52,14 @@ namespace crozone.Logging.AdbLogger
 
             var message = formatter(state, exception);
 
-            if (string.IsNullOrEmpty(message))
-            {
-                return;
-            }
-
-            message = $"{ logLevel }: {message}";
-
             if (exception != null)
             {
                 message += Environment.NewLine + Environment.NewLine + exception.ToString();
+            }
+
+            if (string.IsNullOrEmpty(message))
+            {
+                return;
             }
 
             switch (logLevel)
